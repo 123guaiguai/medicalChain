@@ -7,13 +7,20 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@element-plus/icons-vue": "^2.1.0",
+    "@jbtje/vue3pdf": "^2.1.0",
     "core-js": "^3.8.3",
+    "echarts": "^5.4.2",
+    "element-plus": "^2.3.4",
+    "file-loader": "^6.2.0",
     "vue": "^3.2.13",
     "vue-class-component": "^8.0.0-0",
     "vue-router": "^4.0.3",
     "vuex": "^4.0.0"
   },
   "devDependencies": {
+    "@types/node": "^20.2.3",
+    "@types/webpack-env": "^1.18.0",
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-router": "~5.0.0",
     "@vue/cli-plugin-typescript": "~5.0.0",
