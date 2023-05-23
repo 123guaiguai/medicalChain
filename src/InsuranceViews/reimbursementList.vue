@@ -120,7 +120,55 @@
       :before-close="handleClose"
     >
       <div class="pdfContainer">
-        <!-- <pdf ref="pdf" src="/test.pdf"> </pdf> -->
+        <el-affix position="top" :offset="80">
+          <div class="tools">
+            <el-button
+              type="primary"
+              plain
+              @click.stop="prePage"
+              class="toolBtn"
+              >上一页</el-button
+            >
+
+            <el-button type="info" plain
+              >{{ pdfConfig.curPageNum }}/{{
+                pdfConfig.pageTotalNum
+              }}</el-button
+            >
+            <el-button
+              type="primary"
+              plain
+              @click.stop="nextPage"
+              class="toolBtn"
+              >下一页</el-button
+            >
+
+            <el-button type="success" plain @click.stop="clock" class="toolBtn"
+              >顺时针</el-button
+            >
+            <el-button
+              type="success"
+              plain
+              @click.stop="counterClock"
+              class="toolBtn"
+              >逆时针</el-button
+            >
+          </div>
+        </el-affix>
+        <pdf
+          :src="url"
+          :page="pdfConfig.curPageNum"
+          :rotate="pdfConfig.pageRotate"
+          @page-loaded="pageLoaded($event)"
+          @num-pages="pdfConfig.pageTotalNum = $event"
+          @error="pdfError($event)"
+          style="
+             {
+              display: inline-block;
+              width: 100%;
+            }
+          "
+        ></pdf>
       </div>
     </el-drawer>
   </div>
@@ -129,14 +177,13 @@
 <script setup lang="ts">
 import uploadFile from "../components/uploadFile.vue";
 import { ElMessageBox } from "element-plus";
-import { ref, reactive } from "vue";
+import { ref, reactive, onMounted } from "vue";
 import { reimbursementTagMap } from "../source/index";
-
-
+import pdf from "@jbtje/vue3pdf";
 const drawer = ref(false); //展示弹窗
 const handleClose = (done: () => void) => {
   //关闭弹窗
-  ElMessageBox.confirm("Are you sure you want to close this?")
+  ElMessageBox.confirm("确定关闭预览病单?")
     .then(() => {
       done();
     })
@@ -144,6 +191,54 @@ const handleClose = (done: () => void) => {
       // catch error
     });
 };
+const url = ref("/test.pdf");
+const loadingTask = pdf.createLoadingTask("/test.pdf");
+const pdfConfig = reactive({
+  //总共页数
+  pageTotalNum: 1,
+  //pdf旋转角度
+  pageRotate: 0,
+  // 加载进度
+  loadedRatio: 0,
+  //当前页数
+  curPageNum: 1,
+  pageNum: 1,
+});
+// 上一页函数，
+const prePage = () => {
+  var page = pdfConfig.curPageNum;
+  page = page > 1 ? page - 1 : pdfConfig.pageTotalNum;
+  pdfConfig.curPageNum = page;
+};
+// 下一页函数
+const nextPage = () => {
+  var page = pdfConfig.curPageNum;
+  page = page < pdfConfig.pageTotalNum ? page + 1 : 1;
+  pdfConfig.curPageNum = page;
+};
+// 页面顺时针翻转90度。
+const clock = () => {
+  pdfConfig.pageRotate += 90;
+};
+// 页面逆时针翻转90度。
+const counterClock = () => {
+  pdfConfig.pageRotate -= 90;
+};
+// 页面加载回调函数，其中e为当前页数
+const pageLoaded = (e) => {
+  pdfConfig.curPageNum = e;
+};
+// 其他的一些回调函数。
+const pdfError = (error) => {
+  console.error(error);
+};
+
+onMounted(() => {
+  loadingTask.promise.then((pdf) => {
+    pdfConfig.pageTotalNum = pdf.numPages;
+    console.log(pdfConfig.pageTotalNum);
+  });
+});
 
 const multipleTableRef = ref(null); //表示表格
 const multipleSelection = ref([]); //接收表格多选框中被选中的内容
@@ -282,6 +377,13 @@ const handleSizeChange = (e) => {
     }
   }
   .pdfContainer {
+    width: 100%;
+    .tools {
+      width: 70%;
+      margin: 20px auto;
+      display: flex;
+      justify-content: center;
+    }
   }
 }
 </style>
