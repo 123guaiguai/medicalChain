@@ -75,7 +75,7 @@
 import uploadFile from "../components/uploadFile.vue";
 import { ref, reactive } from "vue";
 import { patientTagMap } from "../source/index";
-
+import {allTableData} from "../source/patientList.js"
 const multipleTableRef = ref(null); //表示表格
 const multipleSelection = ref([]); //接收表格多选框中被选中的内容
 const handleSelectionChange = (val) => {
@@ -99,40 +99,7 @@ const filterTag = (value, row) => {
   return row.tag === value;
 };
 
-const allTableData = [
-  {
-    id: "1",
-    name: "Tom",
-    age: "21",
-    phone: "18100000000",
-    time: "2016-05-02",
-    tag: "completed",
-  },
-  {
-    id: "2",
-    name: "Tom",
-    age: "21",
-    phone: "18100000000",
-    time: "2016-05-02",
-    tag: "pending",
-  },
-  {
-    id: "3",
-    name: "Tom",
-    age: "21",
-    phone: "18100000000",
-    time: "2016-05-02",
-    tag: "cancel",
-  },
-  {
-    id: "4",
-    name: "Tom",
-    age: "21",
-    phone: "18100000000",
-    time: "2016-05-02",
-    tag: "completed",
-  },
-];
+
 const state = reactive({
   page: 1,
   limit: 10,

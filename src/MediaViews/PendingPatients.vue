@@ -65,6 +65,7 @@ import uploadFile from "../components/uploadFile.vue";
 import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import { patientTagMap } from "../source/index";
+import {allTableData} from "../source/pendingPatientList"
 const router = useRouter();
 
 const multipleTableRef = ref(null); //表示表格
@@ -90,40 +91,6 @@ const filterTag = (value, row) => {
   return row.tag === value;
 };
 
-const allTableData = [
-  {
-    patientId: "1",
-    patientName: "Tom",
-    patientAge: "21",
-    room: "内科",
-    time: "2016-05-02",
-    tag: "pending",
-  },
-  {
-    patientId: "2",
-    patientName: "Tom",
-    patientAge: "21",
-    room: "内科",
-    time: "2016-05-02",
-    tag: "cancel",
-  },
-  {
-    patientId: "3",
-    patientName: "Tom",
-    patientAge: "21",
-    room: "内科",
-    time: "2016-05-02",
-    tag: "pending",
-  },
-  {
-    patientId: "4",
-    patientName: "Tom",
-    patientAge: "21",
-    room: "内科",
-    time: "2016-05-02",
-    tag: "pending",
-  },
-];
 const state = reactive({
   page: 1,
   limit: 10,

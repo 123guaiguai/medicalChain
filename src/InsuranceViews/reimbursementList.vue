@@ -180,6 +180,7 @@ import { ElMessageBox } from "element-plus";
 import { ref, reactive, onMounted } from "vue";
 import { reimbursementTagMap } from "../source/index";
 import pdf from "@jbtje/vue3pdf";
+import {policyData} from "../source/reimbursementList"
 const drawer = ref(false); //展示弹窗
 const handleClose = (done: () => void) => {
   //关闭弹窗
@@ -191,7 +192,7 @@ const handleClose = (done: () => void) => {
       // catch error
     });
 };
-const url = ref("/test.pdf");
+const url = ref("/case_zs.pdf");
 const loadingTask = pdf.createLoadingTask("/test.pdf");
 const pdfConfig = reactive({
   //总共页数
@@ -244,7 +245,7 @@ const multipleTableRef = ref(null); //表示表格
 const multipleSelection = ref([]); //接收表格多选框中被选中的内容
 const confirm = (row) => {
   //查看病历
-  console.log("查看病历");
+  //console.log("查看病历");
   drawer.value = true;
 };
 const handleSelectionChange = (val) => {
@@ -270,47 +271,6 @@ const filterTag = (value, row) => {
   return row.claimStatus === value;
 };
 
-const policyData = [
-  {
-    name: "John Smith",
-    id: "123456",
-    policyNumber: "123",
-    insurancePackage: "Package A",
-    reimbursementAmount: 2000,
-    illnessType: "Cancer",
-    reimbursementRatio: 0.8,
-    hospital: "ABC Hospital",
-    doctor: "Dr. Johnson",
-    dateOfVisit: "2023-05-10",
-    claimStatus: "待批准",
-  },
-  {
-    name: "Emily Johnson",
-    id: "234567",
-    policyNumber: "134",
-    insurancePackage: "Package B",
-    reimbursementAmount: 1500,
-    illnessType: "Diabetes",
-    reimbursementRatio: 0.6,
-    claimStatus: "已批准",
-    hospital: "XYZ Clinic",
-    doctor: "Dr. Smith",
-    dateOfVisit: "2023-04-25",
-  },
-  {
-    name: "Emily Johnson",
-    id: "234567",
-    policyNumber: "134",
-    insurancePackage: "Package B",
-    reimbursementAmount: 1500,
-    illnessType: "Diabetes",
-    reimbursementRatio: 0.6,
-    claimStatus: "已拒绝",
-    hospital: "XYZ Clinic",
-    doctor: "Dr. Smith",
-    dateOfVisit: "2023-04-25",
-  },
-];
 
 const state = reactive({
   page: 1,

@@ -79,7 +79,7 @@
       </div>
       <div class="chartWrapper">
         <el-text class="title" type="primary" size="large"
-          >单季度医院收入统计</el-text
+          >单月医院收入统计</el-text
         >
         <el-divider border-style="dashed" />
         <div class="chartItemWrapper" ref="chartContainer2"></div>
@@ -167,6 +167,7 @@ import money from "../assets/money.png";
 import { patientTagMap } from "../source/index";
 import uploadFile from "@/components/uploadFile.vue";
 import { ref, reactive, onMounted } from "vue";
+import { allTableData } from "../source/systemList";
 const chartContainer1 = ref(null);
 const initChart1 = () => {
   //初始化图表一
@@ -177,7 +178,7 @@ const initChart1 = () => {
   const options = {
     color: "#008000",
     title: {
-      text: "单季度接收患者统计",
+      text: "单月接收患者统计",
     },
     tooltip: {
       trigger: "axis",
@@ -194,11 +195,24 @@ const initChart1 = () => {
       },
     },
     legend: {
-      data: ["单季度接收患者统计"],
+      data: ["单月接收患者统计"],
     },
     xAxis: {
       type: "category",
-      data: ["A", "B", "C", "D", "E", "F"], // x 轴数据
+      data: [
+        "1月",
+        "2月",
+        "3月",
+        "4月",
+        "5月",
+        "6月",
+        "7月",
+        "8月",
+        "9月",
+        "10月",
+        "11月",
+        "12月",
+      ], // x 轴数据
       boundaryGap: false, // 折线图从轴上开始绘制
       axisLine: {
         show: false, // 不显示 x 轴线
@@ -217,15 +231,15 @@ const initChart1 = () => {
       },
     },
     grid: {
-      left: "5%",
-      right: "5%",
+      left: "0%",
+      right: "9%",
       bottom: "5%",
       top: "15%",
       containLabel: true,
     },
     series: [
       {
-        name: "单季度接收患者统计",
+        name: "单月接收患者统计",
         type: "line",
         smooth: true, // 折线平滑显示
         areaStyle: {
@@ -248,7 +262,7 @@ const initChart1 = () => {
             ],
           },
         },
-        data: [100, 200, 150, 300, 250, 400], // 折线图数据
+        data: [250, 200, 370, 300, 250, 210, 310, 240, 180, 270, 350, 340], // 折线图数据
         markLine: {
           // 标记线，用于显示平均值
           data: [
@@ -277,31 +291,22 @@ const initChart2 = () => {
   const chart = echarts.init(chartContainer2.value);
   let dataAxis = [
     //图表二的横轴数据
-    "点",
-    "击",
-    "柱",
-    "子",
-    "或",
-    "者",
-    "两",
-    "指",
-    "在",
-    "触",
-    "屏",
-    "上",
-    "滑",
-    "动",
-    "能",
-    "够",
-    "自",
-    "动",
-    "缩",
-    "放",
+    "1月",
+    "2月",
+    "3月",
+    "4月",
+    "5月",
+    "6月",
+    "7月",
+    "8月",
+    "9月",
+    "10月",
+    "11月",
+    "12月",
   ];
   let data = [
     //图表二的竖轴数据
-    220, 182, 191, 234, 290, 330, 310, 123, 442, 321, 90, 149, 210, 122, 133,
-    334, 198, 123, 125, 220,
+    290, 330, 310, 123, 442, 321, 90, 149, 210, 122, 133, 123,
   ];
   // prettier-ignore
   let yMax = 500;
@@ -443,11 +448,9 @@ const initChart3 = () => {
           show: false,
         },
         data: [
-          { value: 1048, name: "Search Engine" },
-          { value: 735, name: "Direct" },
-          { value: 580, name: "Email" },
-          { value: 484, name: "Union Ads" },
-          { value: 300, name: "Video Ads" },
+          { value: 1048, name: "completed" },
+          { value: 735, name: "pending" },
+          { value: 112, name: "cancel" },
         ],
       },
     ],
@@ -483,40 +486,6 @@ const filterTag = (value, row) => {
   return row.tag === value;
 };
 
-const allTableData = [
-  {
-    patientName: "Tom",
-    doctorName: "王建国",
-    room: "内科",
-    date: "2016-05-02",
-    time: "12:10",
-    tag: "completed",
-  },
-  {
-    patientName: "Tom",
-    doctorName: "王建国",
-    room: "内科",
-    date: "2016-05-02",
-    time: "12:10",
-    tag: "completed",
-  },
-  {
-    patientName: "Tom",
-    doctorName: "王建国",
-    room: "内科",
-    date: "2016-05-02",
-    time: "12:10",
-    tag: "completed",
-  },
-  {
-    patientName: "Tom",
-    doctorName: "王建国",
-    room: "内科",
-    date: "2016-05-02",
-    time: "12:10",
-    tag: "completed",
-  },
-];
 const state = reactive({
   page: 1,
   limit: 10,
@@ -584,7 +553,7 @@ const handleSizeChange = (e) => {
     padding: 20px 20px;
     .chartWrapper {
       box-sizing: border-box;
-      width: 47%;
+      width: 48%;
       border-radius: 10px;
       background-color: white;
       box-shadow: 0 0 2px 2px #dceaf1;

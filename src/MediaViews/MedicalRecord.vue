@@ -36,7 +36,7 @@
             }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column fixed="right" label="操作">
+        <el-table-column fixed="right" label="操作" width="250px">
           <template #default="scope">
             <div class="operation">
               <el-tag
@@ -52,7 +52,17 @@
               <el-tag
                 class="ml-2"
                 size="large"
-                @click.prevent="upload(scope.row)"
+                type="warning"
+                @click.prevent="authorized(scope.row)"
+              >
+                <div class="tag-center">
+                  <el-icon><Unlock /></el-icon>授权
+                </div>
+              </el-tag>
+              <el-tag
+                class="ml-2"
+                size="large"
+                @click.prevent="confirm(scope.row)"
               >
                 <div class="tag-center">
                   <el-icon><View /></el-icon> 查看
@@ -73,15 +83,27 @@
         />
       </div>
     </div>
-    <uploadFile />
+    <uploadFile :headers="headers" :data="allTableData" :fields="fields" fileName="病历记录" />
+    <el-drawer
+      v-model="drawer"
+      title="预览病历"
+      size="90%"
+      direction="btt"
+      :before-close="handleClose"
+    >
+      <div id="mypdf"></div>
+    </el-drawer>
   </div>
 </template>
   
   <script setup lang="ts">
 import uploadFile from "../components/uploadFile.vue";
-import { ref, reactive } from "vue";
+import { ref, reactive, onMounted, nextTick } from "vue";
+import { ElMessage } from "element-plus";
+import PDFObject from "pdfobject";
 import { recordTagMap } from "../source/index";
-
+import { ElMessageBox } from "element-plus";
+import { allTableData } from "../source/medicalRecordList.js";
 const multipleTableRef = ref(null); //表示表格
 const multipleSelection = ref([]); //接收表格多选框中被选中的内容
 const handleSelectionChange = (val) => {
@@ -105,36 +127,15 @@ const filterTag = (value, row) => {
   return row.tag === value;
 };
 
-const allTableData = [
-  {
-    recordId: "1",
-    patientId: "2",
-    doctorId: "5",
-    time: "2016-05-02",
-    tag: "已上传",
-  },
-  {
-    recordId: "1",
-    patientId: "2",
-    doctorId: "5",
-    time: "2016-05-02",
-    tag: "未上传",
-  },
-  {
-    recordId: "1",
-    patientId: "2",
-    doctorId: "5",
-    time: "2016-05-02",
-    tag: "已上传",
-  },
-  {
-    recordId: "1",
-    patientId: "2",
-    doctorId: "5",
-    time: "2016-05-02",
-    tag: "未上传",
-  },
-];
+const headers = ["病历ID", "患者ID", "医生ID", "就诊日期", "状态"];
+const fields={
+  'recordId':'病历ID',
+  'patientId':'患者ID',
+  'doctorId':'医生ID',
+  'time':'就诊日期',
+  'tag':'状态'
+}
+
 const state = reactive({
   page: 1,
   limit: 10,
@@ -157,9 +158,50 @@ const handleSizeChange = (e) => {
   state.limit = e;
 };
 
+const authorizedList = ref([]); //记录已授权的病历
+const authorized = (row) => {
+  if (!authorizedList.value.includes(row.recordId)) {
+    authorizedList.value.push(row.recordId);
+    ElMessage({
+      message: `病历号${row.recordId}的病历授权成功!`,
+      type: "success",
+    });
+  } else {
+    ElMessage({
+      message: `病历号${row.recordId}的病历已被授权查看`,
+      type: "success",
+    });
+  }
+};
 const upload = (row) => {
   //病历信息上传
   console.log(row);
+};
+
+const drawer = ref(false); //展示弹窗
+const handleClose = (done: () => void) => {
+  //关闭弹窗
+  ElMessageBox.confirm("确定关闭预览病单?")
+    .then(() => {
+      done();
+    })
+    .catch(() => {
+      // catch error
+    });
+};
+const confirm = (row) => {
+  if (!authorizedList.value.includes(row.recordId)) {
+    return ElMessage({
+      message: `病历号${row.recordId}的病历尚未被授权, 请授权后查看`,
+      type: "warning",
+    });
+  }
+  //病单展示
+  drawer.value = true;
+  let url = "/case_zs.pdf";
+  nextTick(() => {
+    PDFObject.embed(url, "#mypdf");
+  });
 };
 </script>
   
@@ -186,10 +228,10 @@ const upload = (row) => {
     .operation {
       display: flex;
       .ml-2 {
-        margin-right: 10px;
+        margin-right: 5px;
         scale: 1;
         cursor: pointer;
-        margin-left: 20px;
+        margin-left: 5px;
         .tag-center {
           display: flex;
           justify-content: space-around;
@@ -203,6 +245,10 @@ const upload = (row) => {
       display: flex;
       justify-content: flex-end;
     }
+  }
+  #mypdf {
+    height: 800px;
+    border: 1rem solid rgba(0, 0, 0, 0.1);
   }
 }
 </style>
