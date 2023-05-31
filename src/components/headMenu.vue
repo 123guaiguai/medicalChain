@@ -7,7 +7,7 @@
       :ellipsis="false"
       @select="handleSelect"
     >
-      <img src="../assets/logow.png" class="logo" />
+      <img src="../assets/logonew.png" class="logo" />
       <div class="flex-group"></div>
       <el-sub-menu
         :index="index + 1"
@@ -107,7 +107,7 @@ const breadcrumb = reactive({
     height: 70px;
     font-weight: bold;
     .logo {
-      width: 100px;
+      width: 130px;
       height: 50px;
       margin-left: 10px;
     }

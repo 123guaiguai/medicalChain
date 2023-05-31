@@ -15,8 +15,8 @@
       >
         <el-table-column type="selection" width="55" />
         <el-table-column prop="id" label="ID" sortable />
-        <el-table-column prop="name" label="姓名" />
-        <el-table-column prop="age" label="年龄" />
+        <!-- <el-table-column prop="name" label="姓名" /> -->
+        <el-table-column prop="age" label="年龄" sortable/>
         <el-table-column prop="phone" label="电话" />
         <el-table-column prop="time" label="最近就诊" sortable />
         <el-table-column

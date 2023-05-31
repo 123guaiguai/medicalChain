@@ -31,10 +31,10 @@
         />
         <el-table-column prop="startDate" label="起始日期" width="180px" />
         <el-table-column prop="endDate" label="终止日期" width="180px" />
-        <el-table-column prop="paymentStatus" label="缴费状态" width="120px"/>
-        <el-table-column prop="premiumAmount" label="保费金额" width="120px"/>
+        <el-table-column prop="paymentStatus" label="缴费状态" width="120px" />
+        <el-table-column prop="premiumAmount" label="保费金额" width="120px" />
         <el-table-column prop="phoneNumber" label="联系电话" width="120px" />
-        <el-table-column prop="idType" label="证件类型" width="120px"/>
+        <el-table-column prop="idType" label="证件类型" width="120px" />
         <el-table-column
           prop="healthcareProvider"
           label="医疗服务提供者"
@@ -43,19 +43,18 @@
         <el-table-column
           prop="medicalExpenseLimit"
           label="医疗服务费用限额"
-          fixed="right"
           width="150px"
         />
         <el-table-column
           prop="reimbursementRatio"
           label="报销比例"
-          fixed="right"
           width="120px"
         />
         <el-table-column
           prop="policyStatus"
           label="状态"
           width="100"
+          fixed="right"
           :filters="[
             { text: '生效', value: '生效' },
             { text: '未生效', value: '未生效' },
@@ -69,6 +68,27 @@
               disable-transitions
               >{{ scope.row.policyStatus }}</el-tag
             >
+          </template>
+        </el-table-column>
+        <el-table-column fixed="right" label="操作" width="250px">
+          <template #default="scope">
+            <div class="operation">
+              <el-tag
+                class="ml-2"
+                type="success"
+                size="large"
+                @click.prevent="upload(scope.row)"
+              >
+                <div class="tag-center">
+                  <el-icon><Upload /></el-icon> 上传
+                </div>
+              </el-tag>
+              <el-tag class="ml-2" size="large" type="warning">
+                <div class="tag-center">
+                  <el-icon><Unlock /></el-icon>授权加密
+                </div>
+              </el-tag>
+            </div>
           </template>
         </el-table-column>
       </el-table>
@@ -108,6 +128,7 @@
 import uploadFile from "../components/uploadFile.vue";
 import { ref, reactive } from "vue";
 import { insuranceTagMap } from "../source/index";
+import { ElMessage } from "element-plus";
 
 const multipleTableRef = ref(null); //表示表格
 const multipleSelection = ref([]); //接收表格多选框中被选中的内容
@@ -278,6 +299,12 @@ const policyData = [
     reimbursementRatio: "90%",
   },
 ];
+const upload = (row) => {
+  ElMessage({
+    message: `id号${row.id}的保单已上传`,
+    type: "success",
+  });
+};
 
 const state = reactive({
   page: 1,
@@ -327,6 +354,20 @@ const handleSizeChange = (e) => {
       margin-top: 20px;
       display: flex;
       justify-content: flex-end;
+    }
+    .operation {
+      display: flex;
+      .ml-2 {
+        margin-right: 5px;
+        scale: 1;
+        cursor: pointer;
+        margin-left: 5px;
+        .tag-center {
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+        }
+      }
     }
   }
   .emitWrapper {

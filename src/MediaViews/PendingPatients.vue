@@ -12,8 +12,8 @@
       >
         <el-table-column type="selection" width="55" />
         <el-table-column prop="patientId" label="患者ID" sortable />
-        <el-table-column prop="patientName" label="患者姓名" />
-        <el-table-column prop="patientAge" label="患者年龄" />
+        <!-- <el-table-column prop="patientName" label="患者姓名" /> -->
+        <el-table-column prop="patientAge" label="患者年龄" sortable/>
         <el-table-column prop="room" label="挂号科室" />
         <el-table-column
           prop="tag"

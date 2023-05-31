@@ -175,7 +175,10 @@ const authorized = (row) => {
 };
 const upload = (row) => {
   //病历信息上传
-  console.log(row);
+  ElMessage({
+      message: `病历号${row.recordId}的病历已上传！`,
+      type: "success",
+    });
 };
 
 const drawer = ref(false); //展示弹窗

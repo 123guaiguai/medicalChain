@@ -36,6 +36,11 @@ const routes: Array<RouteRecordRaw> = [
         path:"reimbursementList",
         name:"reimbursementList",
         component:()=>import('../InsuranceViews/reimbursementList.vue')
+      },
+      {
+        path:"insuranceStatistic",
+        name:'insuranceStatistic',
+        component:()=>import('../InsuranceViews/statistic.vue')
       }
     ]
   },
