@@ -27,7 +27,7 @@
           prop="insurancePlan"
           label="保单计划"
           width="120px"
-          fixed="left"
+          
         />
         <el-table-column prop="startDate" label="起始日期" width="180px" />
         <el-table-column prop="endDate" label="终止日期" width="180px" />
@@ -70,7 +70,7 @@
             >
           </template>
         </el-table-column>
-        <el-table-column fixed="right" label="操作" width="250px">
+        <el-table-column fixed="right" label="操作" width="280px">
           <template #default="scope">
             <div class="operation">
               <el-tag
@@ -86,6 +86,11 @@
               <el-tag class="ml-2" size="large" type="warning">
                 <div class="tag-center">
                   <el-icon><Unlock /></el-icon>授权加密
+                </div>
+              </el-tag>
+              <el-tag class="ml-2" size="large" @click="view(scope.row,scope.$index)">
+                <div class="tag-center">
+                  <el-icon><View /></el-icon>历史病历
                 </div>
               </el-tag>
             </div>
@@ -326,6 +331,14 @@ const handleCurrentChange = (e) => {
 //改变页数限制
 const handleSizeChange = (e) => {
   state.limit = e;
+};
+const view = (row, index) => {
+  if (index !== 4) {
+    ElMessage({
+      message: `ID为${row.id}的用户无历史病单！`,
+      type: "warning",
+    });
+  }
 };
 </script>
     

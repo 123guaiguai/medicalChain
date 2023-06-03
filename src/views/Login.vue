@@ -4,7 +4,7 @@
       <div class="left">
         <img src="../assets/logonew.png" alt="" class="logo" />
         <img src="../assets/signin.png" alt="" class="bg" />
-        <span class="bold">医链网 MediaChain</span>
+        <span class="bold">医链网 HealNet</span>
         <span>基于Fabric联盟链的电子病历跨链可信共享系统</span>
       </div>
       <div class="right">

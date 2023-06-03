@@ -1,7 +1,7 @@
 <template>
   <div class="patientContainer">
     <div class="patientHead">
-      <el-text class="title" type="primary" size="large">保单列表</el-text>
+      <el-text class="title" type="primary" size="large">报销列表</el-text>
       <el-input v-model="search" placeholder="Type to search" class="search" />
     </div>
     <el-divider border-style="dashed" />
@@ -22,12 +22,7 @@
           sortable
           fixed="left"
         />
-        <el-table-column
-          prop="policyNumber"
-          label="保单号"
-          width="150px"
-          fixed="left"
-        />
+        <el-table-column prop="policyNumber" label="保单号" width="150px" />
         <el-table-column
           prop="insurancePackage"
           label="购买保险套餐"
@@ -67,7 +62,7 @@
             >
           </template>
         </el-table-column>
-        <el-table-column fixed="right" label="操作" width="150px">
+        <el-table-column fixed="right" label="操作" width="310px">
           <template #default="scope">
             <div class="operation">
               <el-tag
@@ -77,6 +72,26 @@
               >
                 <div class="tag-center">
                   <el-icon><View /></el-icon> 查看病单
+                </div>
+              </el-tag>
+              <el-tag
+                class="ml-2"
+                size="large"
+                @click.prevent="view(scope.row, scope.$index)"
+                type="warning"
+              >
+                <div class="tag-center">
+                  <el-icon><Timer /></el-icon> 历史病单
+                </div>
+              </el-tag>
+              <el-tag
+                class="ml-2"
+                size="large"
+                @click.prevent="updateMoney(scope.row, scope.$index)"
+                type="success"
+              >
+                <div class="tag-center">
+                  <el-icon><Money /></el-icon> 修改保额
                 </div>
               </el-tag>
             </div>
@@ -171,17 +186,44 @@
         ></pdf>
       </div>
     </el-drawer>
+    <el-dialog v-model="dialogFormVisible" title="修改报销金额">
+      <el-text class="mx-1" size="large" type="primary">{{
+        "原报销金额:" + hospitalCost.cost
+      }}</el-text>
+      <el-divider border-style="dashed" />
+      <el-input
+        v-model="newHospitalCost"
+        placeholder="请输入报销金额"
+        clearable
+      />
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="desertUpdateCost">放弃</el-button>
+          <el-button type="primary" @click="confirmUpdateCost">
+            确认修改
+          </el-button>
+        </span>
+      </template>
+    </el-dialog>
   </div>
 </template>
       
 <script setup lang="ts">
 import uploadFile from "../components/uploadFile.vue";
-import { ElMessageBox } from "element-plus";
+import { ElMessageBox, ElMessage } from "element-plus";
 import { ref, reactive, onMounted } from "vue";
 import { reimbursementTagMap } from "../source/index";
 import pdf from "@jbtje/vue3pdf";
-import {policyData} from "../source/reimbursementList"
+import { policyData } from "../source/reimbursementList";
+
 const drawer = ref(false); //展示弹窗
+const dialogFormVisible = ref(false); //展示修改金额的弹窗
+const hospitalCost = reactive({
+  cost: "",
+  index: 0,
+});
+const newHospitalCost = ref("");
+
 const handleClose = (done: () => void) => {
   //关闭弹窗
   ElMessageBox.confirm("确定关闭预览病单?")
@@ -248,6 +290,43 @@ const confirm = (row) => {
   //console.log("查看病历");
   drawer.value = true;
 };
+const view = (row, index) => {
+  if (index !== 4) {
+    ElMessage({
+      message: `ID为${row.id}的用户无历史病单！`,
+      type: "warning",
+    });
+  } else {
+    drawer.value = true;
+  }
+};
+const updateMoney = (row, index) => {
+  hospitalCost.cost = row.reimbursementAmount;
+  hospitalCost.index = index;
+  dialogFormVisible.value = true;
+};
+const confirmUpdateCost = () => {
+  if (newHospitalCost.value === "") {
+    return ElMessage.error("修改金额不可为空");
+  }
+  if (Number.isNaN(Number(newHospitalCost.value))) {
+    return ElMessage.error("请输入数字！");
+  }
+  let oldMoney= policyData[hospitalCost.index].reimbursementAmount
+  policyData[hospitalCost.index].reimbursementAmount = Number(
+    newHospitalCost.value
+  );
+  newHospitalCost.value = "";
+  dialogFormVisible.value = false;
+  ElMessage({
+    message: `用户${policyData[hospitalCost.index].id}的报销金额已由${oldMoney}修改为${policyData[hospitalCost.index].reimbursementAmount}`,
+    type: "success",
+  });
+};
+const desertUpdateCost = () => {
+  newHospitalCost.value = "";
+  dialogFormVisible.value = false;
+};
 const handleSelectionChange = (val) => {
   multipleSelection.value = val;
   console.log(val[0]);
@@ -270,7 +349,6 @@ const filterTag = (value, row) => {
   //用于状态栏的过滤
   return row.claimStatus === value;
 };
-
 
 const state = reactive({
   page: 1,
@@ -320,6 +398,20 @@ const handleSizeChange = (e) => {
       margin-top: 20px;
       display: flex;
       justify-content: flex-end;
+    }
+    .operation {
+      display: flex;
+      .ml-2 {
+        margin-right: 5px;
+        scale: 1;
+        cursor: pointer;
+        margin-left: 5px;
+        .tag-center {
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+        }
+      }
     }
   }
   .emitWrapper {

@@ -4,6 +4,7 @@ const allTableData= [
         patientId: "c5D9z8Vb2W",
         doctorId: "0001",
         time: "2016-05-02",
+        hospitalCost:'1200元',
         tag: "未上传"
     },
     {
@@ -11,6 +12,7 @@ const allTableData= [
         patientId: "e9J3v7Nx5K",
         doctorId: "0002",
         time: "2016-05-03",
+        hospitalCost:'1100元',
         tag: "已上传"
     },
     {
@@ -18,6 +20,7 @@ const allTableData= [
         patientId: "g6T2j7Rw4B",
         doctorId: "0003",
         time: "2016-05-04",
+        hospitalCost:'4400元',
         tag: "未上传"
     },
     {
@@ -25,6 +28,7 @@ const allTableData= [
         patientId: "i7C9v5Kj8Q",
         doctorId: "0004",
         time: "2016-05-05",
+        hospitalCost:'3200元',
         tag: "已上传"
     },
     {
@@ -32,6 +36,7 @@ const allTableData= [
         patientId: "k3Y7n8Qx4V",
         doctorId: "0005",
         time: "2016-05-06",
+        hospitalCost:'6700元',
         tag: "未上传"
     },
     {
@@ -39,6 +44,7 @@ const allTableData= [
         patientId: "m6G8h4Rq3F",
         doctorId: "0006",
         time: "2016-05-07",
+        hospitalCost:'2900元',
         tag: "已上传"
     },
     {
@@ -46,6 +52,7 @@ const allTableData= [
         patientId: "o4I6u9Yp2L",
         doctorId: "0007",
         time: "2016-05-08",
+        hospitalCost:'5200元',
         tag: "未上传"
     },
     {
@@ -53,6 +60,7 @@ const allTableData= [
         patientId: "q9M3k7Dx6G",
         doctorId: "0008",
         time: "2016-05-09",
+        hospitalCost:'4500元',
         tag: "已上传"
     },
     {
@@ -60,6 +68,7 @@ const allTableData= [
         patientId: "s8P4z2Jx7V",
         doctorId: "0009",
         time: "2016-05-10",
+        hospitalCost:'12100元',
         tag: "未上传"
     },
     {
@@ -67,6 +76,7 @@ const allTableData= [
         patientId: "u5R2i7Tq1F",
         doctorId: "0010",
         time: "2016-05-11",
+        hospitalCost:'7700元',
         tag: "已上传"
     },
     {

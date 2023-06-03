@@ -19,6 +19,7 @@
         <el-table-column prop="patientId" label="患者ID" sortable />
         <el-table-column prop="doctorId" label="医生ID" />
         <el-table-column prop="time" label="就诊日期" />
+        <el-table-column prop="hospitalCost" label="住院费用" />
         <el-table-column
           prop="tag"
           label="状态"
