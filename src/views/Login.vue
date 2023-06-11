@@ -5,7 +5,7 @@
         <img src="../assets/logonew.png" alt="" class="logo" />
         <img src="../assets/signin.png" alt="" class="bg" />
         <span class="bold">医链网 HealNet</span>
-        <span>基于Fabric联盟链的电子病历跨链可信共享系统</span>
+        <span>安全隐私的跨链医疗保险系统</span>
       </div>
       <div class="right">
         <span class="title">LOGIN</span>
@@ -19,7 +19,7 @@
         </div>
         <div class="inputWrapper">
           <el-input
-            v-model="loginForm.account"
+            v-model="loginForm.password"
             class="w-50 m-2"
             placeholder="请输入密码"
             :prefix-icon="Lock"
@@ -55,17 +55,37 @@ import { ref, reactive } from "vue";
 import { useRouter } from "vue-router";
 import { Lock, User } from "@element-plus/icons-vue";
 import { LoginForm } from "../type/login";
-const loginType=ref('1');//1代表登陆医院管理端，2代表登陆保险公司端
+import { ElMessage } from "element-plus";
+const loginType = ref("1"); //1代表登陆医院管理端，2代表登陆保险公司端
 const loginForm = reactive(new LoginForm());
 const rememberPass = ref(true);
 const router = useRouter();
 const login = () => {
-  if(loginType.value==='1'){
-    router.push("/mediaHome");//跳转到医院端
-  }else{
-    router.push("/insuranceHome");//跳转到保险公司端
+  if (!loginForm.account || !loginForm.password) {
+    return ElMessage.error("请完整填写账号和密码！");
   }
-  
+  if (loginType.value === "1") {
+    if (loginForm.account === "hospital" && loginForm.password === "123456") {
+      ElMessage({
+        message: "登陆成功！",
+        type: "success",
+      });
+      router.push("/mediaHome"); //跳转到医院端
+    } else {
+      return ElMessage.error("账号或密码错误，登陆失败！");
+    }
+  } else {
+    if(loginForm.account==='insurance'&&loginForm.password==='123456'){
+      ElMessage({
+        message: "登陆成功！",
+        type: "success",
+      });
+      router.push("/insuranceHome"); //跳转到保险公司端
+    }
+    else{
+      return ElMessage.error("账号或密码错误，登陆失败！");
+    }
+  }
 };
 </script>
 
@@ -145,8 +165,8 @@ const login = () => {
           color: #59b1e7;
         }
       }
-      .ml-4{
-        margin-bottom:20px;
+      .ml-4 {
+        margin-bottom: 20px;
       }
       .remark {
         margin-top: 10px;
