@@ -5,7 +5,7 @@
         <img src="../assets/logonew.png" alt="" class="logo" />
         <img src="../assets/signin.png" alt="" class="bg" />
         <span class="bold">医链网 HealNet</span>
-        <span>安全隐私的跨链医疗保险系统</span>
+        <span>安全可信的跨链医疗保险系统</span>
       </div>
       <div class="right">
         <span class="title">LOGIN</span>
@@ -37,14 +37,14 @@
         <div class="dividerWrapper">
           <el-divider border-style="dashed" />
         </div>
-        <div class="register">
+        <!-- <div class="register">
           <span>还没有账户？ <a>注册</a></span>
           <span class="iconList">
             <span class="iconfont icon-weixin"></span>
             <span class="iconfont icon-iconqq"></span>
             <span class="iconfont icon-shouji"></span>
           </span>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>

@@ -58,8 +58,8 @@ const router = useRouter();
 const activeIndex = ref("1");
 const menuList = reactive([
   {
-    menuTitle: "病例中心",
-    menuItem: [{ name: "病例管理", path: "/mediaHome/medicalRecord" }],
+    menuTitle: "病历中心",
+    menuItem: [{ name: "病历管理", path: "/mediaHome/medicalRecord" }],
   },
   {
     menuTitle: "诊断中心",

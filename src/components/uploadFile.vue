@@ -121,6 +121,9 @@ const exportFile = (header, columns, dataList, expertName) => {
 };
 
 const exportToExcel = () => {
+  if(!props.headers){
+    return ;
+  }
   const columns = props.headers.map((item) => {
     return {
       header: item,
