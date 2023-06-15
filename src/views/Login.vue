@@ -23,6 +23,7 @@
             class="w-50 m-2"
             placeholder="请输入密码"
             :prefix-icon="Lock"
+            type="password"
           />
           <span class="forgetPass">忘记密码</span>
         </div>
