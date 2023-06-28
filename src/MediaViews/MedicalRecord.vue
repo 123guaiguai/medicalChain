@@ -44,7 +44,7 @@
                 class="ml-2"
                 type="success"
                 size="large"
-                @click.prevent="upload(scope.row)"
+                @click.prevent="upload(scope.row,scope.$index)"
               >
                 <div class="tag-center">
                   <el-icon><Upload /></el-icon> 上传
@@ -84,7 +84,12 @@
         />
       </div>
     </div>
-    <uploadFile :headers="headers" :data="allTableData" :fields="fields" fileName="病历记录" />
+    <uploadFile
+      :headers="headers"
+      :data="allTableData"
+      :fields="fields"
+      fileName="病历记录"
+    />
     <el-drawer
       v-model="drawer"
       title="预览病历"
@@ -107,6 +112,7 @@ import { ElMessageBox } from "element-plus";
 import { allTableData } from "../source/medicalRecordList.js";
 const multipleTableRef = ref(null); //表示表格
 const multipleSelection = ref([]); //接收表格多选框中被选中的内容
+const data=reactive(allTableData);
 const handleSelectionChange = (val) => {
   multipleSelection.value = val;
   console.log(val[0]);
@@ -129,13 +135,13 @@ const filterTag = (value, row) => {
 };
 
 const headers = ["病历ID", "患者ID", "医生ID", "就诊日期", "状态"];
-const fields={
-  'recordId':'病历ID',
-  'patientId':'患者ID',
-  'doctorId':'医生ID',
-  'time':'就诊日期',
-  'tag':'状态'
-}
+const fields = {
+  recordId: "病历ID",
+  patientId: "患者ID",
+  doctorId: "医生ID",
+  time: "就诊日期",
+  tag: "状态",
+};
 
 const state = reactive({
   page: 1,
@@ -144,7 +150,7 @@ const state = reactive({
 });
 //前端限制分页（tableData为当前展示页表格）
 const tableData = () => {
-  return allTableData.filter(
+  return data.filter(
     (item, index) =>
       index < state.page * state.limit &&
       index >= state.limit * (state.page - 1)
@@ -164,7 +170,7 @@ const authorized = (row) => {
   if (!authorizedList.value.includes(row.recordId)) {
     authorizedList.value.push(row.recordId);
     ElMessage({
-      message: `病历号${row.recordId}的病历授权成功!`,
+      message: `病历号${row.recordId}的病历请求授权成功!`,
       type: "success",
     });
   } else {
@@ -174,12 +180,15 @@ const authorized = (row) => {
     });
   }
 };
-const upload = (row) => {
+const upload = (row,index) => {
   //病历信息上传
+  data[index].tag="已上传"
   ElMessage({
-      message: `病历号${row.recordId}的病历已上传！`,
-      type: "success",
-    });
+    message: `病历号${row.recordId}的病历已上传！`,
+    type: "success",
+  });
+  console.log(data[index])
+  
 };
 
 const drawer = ref(false); //展示弹窗

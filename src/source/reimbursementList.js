@@ -1,9 +1,9 @@
 const policyData = [
     {
-        id: "a3B8k9Zc7D",
+        id: "157auoWs2H12",
         policyNumber: "000001",
-        insurancePackage: "基础保险",
-        reimbursementAmount: 2000,
+        insurancePackage: "医保康",
+        reimbursementAmount: 6500,
         illnessType: "癌症",
         reimbursementRatio: "80%",
         hospital: "成都中医药大学附属医院",
@@ -12,7 +12,7 @@ const policyData = [
         claimStatus: "待批准"
     },
     {
-        id: "h7K2e4Ym9X",
+        id: "h7K2e4Ym9X3e",
         policyNumber: "000002",
         insurancePackage: "综合保险",
         reimbursementAmount: 1500,
@@ -24,7 +24,7 @@ const policyData = [
         claimStatus: "待批准"
     },
     {
-        id: "n5S9w6Rq3F",
+        id: "n5S9w6Rq3Ffr",
         policyNumber: "000003",
         insurancePackage: "高端保险",
         reimbursementAmount: 1800,
@@ -36,7 +36,7 @@ const policyData = [
         claimStatus: "已批准"
     },
     {
-        id: "p2T4x7Vb9W",
+        id: "p2T4x7Vb9W65",
         policyNumber: "000004",
         insurancePackage: "中级保险",
         reimbursementAmount: 2500,
@@ -48,7 +48,7 @@ const policyData = [
         claimStatus: "待批准"
     },
     {
-        id: "m8N1j3Lk6Q",
+        id: "m8N1j3Lk6Q76",
         policyNumber: "000005",
         insurancePackage: "综合保险",
         reimbursementAmount: 3000,
@@ -60,7 +60,7 @@ const policyData = [
         claimStatus: "待批准"
     },
     {
-        id: "d5F9r6Tq3G",
+        id: "d5F9r6Tq3Gds",
         policyNumber: "000006",
         insurancePackage: "基础保险",
         reimbursementAmount: 2200,
@@ -72,7 +72,7 @@ const policyData = [
         claimStatus: "已批准"
     },
     {
-        id: "y2K4s8Xv7Z",
+        id: "y2K4s8Xv7Zwq",
         policyNumber: "000007",
         insurancePackage: "高端保险",
         reimbursementAmount: 2800,

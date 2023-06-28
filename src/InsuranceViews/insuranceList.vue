@@ -18,7 +18,7 @@
         <el-table-column
           prop="id"
           label="用户ID"
-          width="120px"
+          width="150px"
           sortable
           fixed="left"
         />
@@ -77,15 +77,15 @@
                 class="ml-2"
                 type="success"
                 size="large"
-                @click.prevent="upload(scope.row)"
+                @click.prevent="upload(scope.row,scope.$index)"
               >
                 <div class="tag-center">
                   <el-icon><Upload /></el-icon> 上传
                 </div>
               </el-tag>
-              <el-tag class="ml-2" size="large" type="warning">
+              <el-tag class="ml-2" size="large" type="warning" @click.prevent="reject(scope.row,scope.$index)">
                 <div class="tag-center">
-                  <el-icon><Unlock /></el-icon>授权加密
+                  <el-icon><Unlock /></el-icon>取消投保
                 </div>
               </el-tag>
               <el-tag class="ml-2" size="large" @click="view(scope.row,scope.$index)">
@@ -158,13 +158,61 @@ const filterTag = (value, row) => {
   return row.policyStatus === value;
 };
 
-const policyData = [
+const policyData = reactive([
+  {
+    id: "157auoWs2H12",
+    name: "张三",
+    age: 67,
+    gender: "男",
+    policyNumber: "POL001",
+    insurancePlan: "基本计划",
+    startDate: "2023-01-01",
+    endDate: "2043-01-01",
+    paymentStatus: "已缴费",
+    premiumAmount: 1000,
+    policyStatus: "未生效",
+    phoneNumber: "123456789",
+    email: "zhangsan@example.com",
+    idType: "身份证",
+    idNumber: "XXXXXXXXXXXXXXXXX",
+    insuredName: "张三",
+    insuredRelationship: "本人",
+    healthcareProvider: "成都市第六人民医院",
+    medicalExpenseLimit: 50000,
+    reimbursementRatio: "80%",
+    emergencyContact: {
+      name: "李四",
+      phoneNumber: "987654321",
+    },
+  },
+  {
+    id: "1234567def",
+    name: "李四",
+    age: 45,
+    gender: "女",
+    policyNumber: "POL002",
+    insurancePlan: "高级计划",
+    startDate: "2023-02-15",
+    endDate: "2024-02-14",
+    paymentStatus: "已缴费",
+    premiumAmount: 1500,
+    policyStatus: "生效",
+    phoneNumber: "987654321",
+    email: "lisi@example.com",
+    idType: "护照",
+    idNumber: "YYYYYYYYYYYYYYY",
+    insuredName: "王五",
+    insuredRelationship: "配偶",
+    healthcareProvider: "YY医院",
+    medicalExpenseLimit: 100000,
+    reimbursementRatio: "90%",
+  },
   {
     id: "1234567abc",
     name: "张三",
     age: 30,
     gender: "男",
-    policyNumber: "POL001",
+    policyNumber: "POL003",
     insurancePlan: "基本计划",
     startDate: "2023-01-01",
     endDate: "2023-12-31",
@@ -190,13 +238,13 @@ const policyData = [
     name: "李四",
     age: 45,
     gender: "女",
-    policyNumber: "POL002",
+    policyNumber: "POL004",
     insurancePlan: "高级计划",
     startDate: "2023-02-15",
     endDate: "2024-02-14",
     paymentStatus: "已缴费",
     premiumAmount: 1500,
-    policyStatus: "未生效",
+    policyStatus: "生效",
     phoneNumber: "987654321",
     email: "lisi@example.com",
     idType: "护照",
@@ -212,7 +260,7 @@ const policyData = [
     name: "张三",
     age: 30,
     gender: "男",
-    policyNumber: "POL001",
+    policyNumber: "POL005",
     insurancePlan: "基本计划",
     startDate: "2023-01-01",
     endDate: "2023-12-31",
@@ -238,61 +286,13 @@ const policyData = [
     name: "李四",
     age: 45,
     gender: "女",
-    policyNumber: "POL002",
+    policyNumber: "POL006",
     insurancePlan: "高级计划",
     startDate: "2023-02-15",
     endDate: "2024-02-14",
     paymentStatus: "已缴费",
     premiumAmount: 1500,
-    policyStatus: "未生效",
-    phoneNumber: "987654321",
-    email: "lisi@example.com",
-    idType: "护照",
-    idNumber: "YYYYYYYYYYYYYYY",
-    insuredName: "王五",
-    insuredRelationship: "配偶",
-    healthcareProvider: "YY医院",
-    medicalExpenseLimit: 100000,
-    reimbursementRatio: "90%",
-  },
-  {
-    id: "1234567abc",
-    name: "张三",
-    age: 30,
-    gender: "男",
-    policyNumber: "POL001",
-    insurancePlan: "基本计划",
-    startDate: "2023-01-01",
-    endDate: "2023-12-31",
-    paymentStatus: "已缴费",
-    premiumAmount: 1000,
     policyStatus: "生效",
-    phoneNumber: "123456789",
-    email: "zhangsan@example.com",
-    idType: "身份证",
-    idNumber: "XXXXXXXXXXXXXXXXX",
-    insuredName: "张三",
-    insuredRelationship: "本人",
-    healthcareProvider: "XX医院",
-    medicalExpenseLimit: 50000,
-    reimbursementRatio: "80%",
-    emergencyContact: {
-      name: "李四",
-      phoneNumber: "987654321",
-    },
-  },
-  {
-    id: "1234567def",
-    name: "李四",
-    age: 45,
-    gender: "女",
-    policyNumber: "POL002",
-    insurancePlan: "高级计划",
-    startDate: "2023-02-15",
-    endDate: "2024-02-14",
-    paymentStatus: "已缴费",
-    premiumAmount: 1500,
-    policyStatus: "未生效",
     phoneNumber: "987654321",
     email: "lisi@example.com",
     idType: "护照",
@@ -303,13 +303,21 @@ const policyData = [
     medicalExpenseLimit: 100000,
     reimbursementRatio: "90%",
   },
-];
-const upload = (row) => {
+]);
+const upload = (row,index) => {
+  policyData[index].policyStatus="生效";
   ElMessage({
     message: `id号${row.id}的保单已上传`,
     type: "success",
   });
 };
+const reject=(row,index)=>{
+  policyData[index].policyStatus="未生效";
+  ElMessage({
+    message: `id号${row.id}的保单已拒绝`,
+    type: "error",
+  });
+}
 
 const state = reactive({
   page: 1,

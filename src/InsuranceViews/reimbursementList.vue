@@ -18,7 +18,7 @@
         <el-table-column
           prop="id"
           label="用户ID"
-          width="120px"
+          width="150px"
           sortable
           fixed="left"
         />
@@ -77,11 +77,11 @@
               <el-tag
                 class="ml-2"
                 size="large"
-                @click.prevent="view(scope.row, scope.$index)"
+                @click.prevent="upload(scope.row, scope.$index)"
                 type="warning"
               >
                 <div class="tag-center">
-                  <el-icon><Timer /></el-icon> 历史病单
+                  <el-icon><Upload /></el-icon> 上传
                 </div>
               </el-tag>
               <el-tag
@@ -290,15 +290,11 @@ const confirm = (row) => {
   //console.log("查看病历");
   drawer.value = true;
 };
-const view = (row, index) => {
-  if (index !== 4) {
-    ElMessage({
-      message: `ID为${row.id}的用户无历史病单！`,
-      type: "warning",
+const upload = (row, index) => {
+  ElMessage({
+      message: `${row.id}号用户的报销上传成功!`,
+      type: "success",
     });
-  } else {
-    drawer.value = true;
-  }
 };
 const updateMoney = (row, index) => {
   hospitalCost.cost = row.reimbursementAmount;
