@@ -8,7 +8,7 @@ const policyData = [
         reimbursementRatio: "80%",
         hospital: "成都中医药大学附属医院",
         doctor: "张文明",
-        dateOfVisit: "2023-05-10",
+        dateOfVisit: "2023-05-02",
         claimStatus: "待批准"
     },
     {
