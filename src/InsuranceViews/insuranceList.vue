@@ -175,7 +175,7 @@ const policyData = reactive([
     paymentStatus: "已缴费",
     premiumAmount: 1000,
     policyStatus: "未生效",
-    phoneNumber: "13973491276",
+    phoneNumber: "17829384949",
     email: "zhangsan@example.com",
     idType: "身份证",
     idNumber: "XXXXXXXXXXXXXXXXX",
