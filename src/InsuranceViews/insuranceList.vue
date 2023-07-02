@@ -23,12 +23,7 @@
           fixed="left"
         />
         <el-table-column prop="policyNumber" label="保单号" width="120px" />
-        <el-table-column
-          prop="insurancePlan"
-          label="保单计划"
-          width="120px"
-          
-        />
+        <el-table-column prop="insurancePlan" label="保单计划" width="120px" />
         <el-table-column prop="startDate" label="起始日期" width="180px" />
         <el-table-column prop="endDate" label="终止日期" width="180px" />
         <el-table-column prop="paymentStatus" label="缴费状态" width="120px" />
@@ -77,18 +72,27 @@
                 class="ml-2"
                 type="success"
                 size="large"
-                @click.prevent="upload(scope.row,scope.$index)"
+                @click.prevent="upload(scope.row, scope.$index)"
               >
                 <div class="tag-center">
                   <el-icon><Upload /></el-icon> 上传
                 </div>
               </el-tag>
-              <el-tag class="ml-2" size="large" type="warning" @click.prevent="reject(scope.row,scope.$index)">
+              <el-tag
+                class="ml-2"
+                size="large"
+                type="warning"
+                @click.prevent="reject(scope.row, scope.$index)"
+              >
                 <div class="tag-center">
                   <el-icon><Unlock /></el-icon>取消投保
                 </div>
               </el-tag>
-              <el-tag class="ml-2" size="large" @click="view(scope.row,scope.$index)">
+              <el-tag
+                class="ml-2"
+                size="large"
+                @click="view(scope.row, scope.$index)"
+              >
                 <div class="tag-center">
                   <el-icon><View /></el-icon>历史病历
                 </div>
@@ -171,7 +175,7 @@ const policyData = reactive([
     paymentStatus: "已缴费",
     premiumAmount: 1000,
     policyStatus: "未生效",
-    phoneNumber: "123456789",
+    phoneNumber: "13973491276",
     email: "zhangsan@example.com",
     idType: "身份证",
     idNumber: "XXXXXXXXXXXXXXXXX",
@@ -197,7 +201,7 @@ const policyData = reactive([
     paymentStatus: "已缴费",
     premiumAmount: 1500,
     policyStatus: "生效",
-    phoneNumber: "987654321",
+    phoneNumber: "18765432121",
     email: "lisi@example.com",
     idType: "护照",
     idNumber: "YYYYYYYYYYYYYYY",
@@ -219,7 +223,7 @@ const policyData = reactive([
     paymentStatus: "已缴费",
     premiumAmount: 1000,
     policyStatus: "生效",
-    phoneNumber: "123456789",
+    phoneNumber: "13145678921",
     email: "zhangsan@example.com",
     idType: "身份证",
     idNumber: "XXXXXXXXXXXXXXXXX",
@@ -245,7 +249,7 @@ const policyData = reactive([
     paymentStatus: "已缴费",
     premiumAmount: 1500,
     policyStatus: "生效",
-    phoneNumber: "987654321",
+    phoneNumber: "18765432134",
     email: "lisi@example.com",
     idType: "护照",
     idNumber: "YYYYYYYYYYYYYYY",
@@ -267,7 +271,7 @@ const policyData = reactive([
     paymentStatus: "已缴费",
     premiumAmount: 1000,
     policyStatus: "生效",
-    phoneNumber: "123456789",
+    phoneNumber: "12545678909",
     email: "zhangsan@example.com",
     idType: "身份证",
     idNumber: "XXXXXXXXXXXXXXXXX",
@@ -293,7 +297,7 @@ const policyData = reactive([
     paymentStatus: "已缴费",
     premiumAmount: 1500,
     policyStatus: "生效",
-    phoneNumber: "987654321",
+    phoneNumber: "18654321124",
     email: "lisi@example.com",
     idType: "护照",
     idNumber: "YYYYYYYYYYYYYYY",
@@ -304,20 +308,20 @@ const policyData = reactive([
     reimbursementRatio: "90%",
   },
 ]);
-const upload = (row,index) => {
-  policyData[index].policyStatus="生效";
+const upload = (row, index) => {
+  policyData[index].policyStatus = "生效";
   ElMessage({
     message: `id号${row.id}的保单已上传`,
     type: "success",
   });
 };
-const reject=(row,index)=>{
-  policyData[index].policyStatus="未生效";
+const reject = (row, index) => {
+  policyData[index].policyStatus = "未生效";
   ElMessage({
     message: `id号${row.id}的保单已拒绝`,
     type: "error",
   });
-}
+};
 
 const state = reactive({
   page: 1,
